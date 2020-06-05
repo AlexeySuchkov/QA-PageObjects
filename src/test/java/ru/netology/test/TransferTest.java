@@ -64,9 +64,14 @@ public class TransferTest {
         val verificationPage = loginPage.validLogin(authInfo);
         val verificationCode = DataHelper.getVerificationCode(authInfo);
         val dashboardPage = verificationPage.verify(verificationCode);
+        int firstCardBalanceBefore = DashboardPage.getCurrentFirstCardBalance();
+        int secondCardBalanceBefore = DashboardPage.getCurrentSecondCardBalance();
         val transferPage = dashboardPage.firstCard();
         val cardInfo = DataHelper.getSecondCardInfo();
         transferPage.transferCard(cardInfo, transferAmount);
-        $(withText("На счету недостаточно средств")).shouldBe(Condition.visible);
+        int firstCardBalanceAfterTransfer = DataHelper.secondCardBalanceAfterTransfer(firstCardBalanceBefore, transferAmount);
+        int secondCardBalanceAfterTransfer = DataHelper.firstCardBalanceAfterTransfer(secondCardBalanceBefore, transferAmount);
+        assertEquals(firstCardBalanceBefore, firstCardBalanceAfterTransfer);
+        assertEquals(secondCardBalanceBefore, secondCardBalanceAfterTransfer);
     }
 }
