@@ -38,13 +38,13 @@ public class DataHelper {
     }
 
 
-    public static int firstCardBalanceAfterTransfer(int balance, int amount) {
+    public static int decreaseBalance(int balance, int amount) {
         int newBalance = balance - amount;
         return newBalance;
 
     }
 
-    public static int secondCardBalanceAfterTransfer(int balance, int amount) {
+    public static int increaseBalance(int balance, int amount) {
         int newBalance = balance + amount;
         return newBalance;
     }
